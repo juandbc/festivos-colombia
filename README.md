@@ -12,7 +12,7 @@ const fc = require('festivos-colombia');
 
 let year = 2018;
 
-let holidays = holidays = fc.getHolidaysByYear(year);
+let holidays = fc.getHolidaysByYear(year);
 holidays.forEach(element => {
 	if (element.static) {
 		console.log(element.date + " - " + element.name);
