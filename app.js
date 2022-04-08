@@ -161,5 +161,21 @@ function getHolidaysByYearInterval(initialYear, finalYear) {
 	return holidaysArray;
 }
 
+/**
+ * @function isHoliday
+ * Calcula si un dia en especifico es festivo
+ * @author Santiago Alarcón <salarconlagos@gmail.com>
+ * @since 1.0.1
+ * @param {Date} date Fecha que se busca saber si es o no festivo.
+ * @returns {Boolean} Booleano que indica si es o no es festivo.
+ */
+
+function isHoliday(date) {
+	return !!getHolidaysByYear(date.getFullYear()).find((holiday) => {
+		return holiday.date == formatDate(date);
+	})
+}
+
 module.exports.getHolidaysByYear = getHolidaysByYear;
 module.exports.getHolidaysByYearInterval = getHolidaysByYearInterval;
+module.exports.isHoliday = isHoliday;
