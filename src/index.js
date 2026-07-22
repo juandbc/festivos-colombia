@@ -72,7 +72,7 @@ const getNextMonday = (date) => {
  * @returns {Date} retorna la nueva fecha con los días sumados
  */
 const sumDay = (stringDate, dayToSum) => {
-	let date = new Date(stringDate);
+	const date = new Date(stringDate);
 	date.setDate(date.getDate() + dayToSum);
 	return date;
 };
@@ -90,13 +90,13 @@ export const getHolidaysByYear = (year) => {
 		throw new TypeError(`El año debe ser un número finito, recibido: ${year}`);
 	}
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
-	let easterSunday = getEasterSunday(year);
+	const easterSunday = getEasterSunday(year);
 
 	return holidays.map((rule) => {
 		let baseDate =
 			rule.daysToSum != null
 				? sumDay(easterSunday.toDateString(), rule.daysToSum)
-				: new Date(rule.date + "/" + year);
+				: new Date(`${rule.date}/${year}`);
 
 		if (rule.nextMonday) baseDate = getNextMonday(baseDate);
 
@@ -124,7 +124,7 @@ export const getHolidaysByYearInterval = (initialYear, finalYear) => {
 	if (finalYear < initialYear) {
 		throw new RangeError("El año final debe ser mayor o igual al año inicial.");
 	}
-	let holidaysArray = [];
+	const holidaysArray = [];
 	for (let year = initialYear; year <= finalYear; year++) {
 		holidaysArray.push({ year, holidays: getHolidaysByYear(year) });
 	}

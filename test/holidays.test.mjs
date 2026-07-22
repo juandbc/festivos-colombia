@@ -1,10 +1,10 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import {
+	getHolidayByDate,
 	getHolidaysByYear,
 	getHolidaysByYearInterval,
 	isHoliday,
-	getHolidayByDate,
 } from "../src/index.js";
 
 test("getHolidaysByYear returns 19 holidays for 2024", () => {
