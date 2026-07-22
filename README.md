@@ -3,16 +3,26 @@
 Módulo de JavaScript para obtener los días festivos de Colombia.
 [Basado en la ley 51 de 1983](http://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=4954).
 
-## Example
+## Instalación
 
-`npm install festivos-colombia`
+Requiere **Node.js >= 18**.
+
+```bash
+npm install festivos-colombia
+```
+
+## Uso
+
+### CommonJS
 
 ```javascript
-const fc = require('festivos-colombia');
+const { getHolidaysByYear, isHoliday } = require("festivos-colombia");
+
+console.log(isHoliday("2024-08-07")); // true
 
 let year = 2018;
 
-let holidays = fc.getHolidaysByYear(year);
+let holidays = getHolidaysByYear(year);
 holidays.forEach(element => {
 	if (element.static) {
 		console.log(element.date + " - " + element.name);
@@ -41,7 +51,7 @@ holidays.forEach(element => {
 // 08/12/2018 - Día de la Inmaculada Concepción
 // 25/12/2018 - Día de Navidad
 
-holidays = fc.getHolidaysByYearInterval(year, 2026);
+holidays = getHolidaysByYearInterval(year, 2026);
 holidays.forEach(obj => {
 	console.log("Año: " + obj.year);
 	obj.holidays.forEach(element => {

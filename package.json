@@ -1,23 +1,36 @@
 {
   "name": "festivos-colombia",
-  "version": "1.0.1",
-  "description": "Módulo de JavaScript para obtener los días festivos de Colombia.",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "1.2.0",
+  "description": "Módulo para obtener los días festivos de Colombia.",
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./index.cjs"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JuanB3r/festivos-colombia.git"
+  "files": ["src", "index.cjs", "README.md", "LICENSE.md"],
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [
     "colombia",
-    "festivos"
+    "colombian",
+    "festivos",
+    "holidays",
+    "public-holidays",
+    "calendar",
+    "colombia-holidays"
   ],
-  "author": "Juan Bermudez",
+  "author": "Juan David Bermudez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JuanB3r/festivos-colombia/issues"
+    "url": "https://github.com/juandbc/festivos-colombia/issues"
   },
-  "homepage": "https://github.com/JuanB3r/festivos-colombia#readme"
+  "homepage": "https://github.com/juandbc/festivos-colombia#readme"
 }

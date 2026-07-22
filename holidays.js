@@ -1,4 +1,9 @@
-const HOLIDAYS = [
+/**
+ * Modulo que contiene dos Objetos con las fechas de los días
+ * festivos del año
+ * @module holidays
+ */
+export const holidays = [
 	{ date: "01/01", nextMonday: false, name: "Año Nuevo" },
 	{ date: "01/06", nextMonday: true, name: "Día de los Reyes Magos" },
 	{ date: "03/19", nextMonday: true, name: "Día de San José" },
@@ -20,13 +25,7 @@ const HOLIDAYS = [
 	{ date: "12/25", nextMonday: false, name: "Día de Navidad" }
 ];
 
-/**
- * Modulo que contiene dos Objetos con las fechas de los días 
- * festivos del año
- * @module holidays
- */
-exports.holidays = HOLIDAYS;
-/* 
+/*
 pascua entre marzo 22 y abril 25
 ascensión 40 días después de pascua
 corpus christi 60 días después de pascua

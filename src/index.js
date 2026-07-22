@@ -4,14 +4,14 @@
  * @author Juan Bermudez <juanbermucele@hotmail.com>
  * @since 1.0
  */
-const HOLIDAYS = require("./holidays.js").holidays;
+import {holidays} from "../holidays.js";
 
 /**
  * @function applyTwoDigits
  * Aplica el formato de dos dígitos a un número menor que diez
  * @author Juan Bermudez <juanbermucele@hotmail.com>
  * @since 1.0
- * @param {number} number 
+ * @param {number} number
  * @returns {string} texto formateado
  */
 function applyTwoDigits(number) {
@@ -27,7 +27,7 @@ function applyTwoDigits(number) {
  * @returns {string} texto de la fecha formateada
  */
 function formatDate(date) {
-	return applyTwoDigits(date.getDate()) + "/" + applyTwoDigits(date.getMonth() + 1) + "/" + date.getFullYear();
+  return applyTwoDigits(date.getDate()) + "/" + applyTwoDigits(date.getMonth() + 1) + "/" + date.getFullYear();
 }
 
 /**
@@ -95,12 +95,12 @@ function sumDay(stringDate, dayToSum) {
  * @param {number} year número del año
  * @returns {Array} Array con todos los festivos del año
  */
-function getHolidaysByYear(year) {
+export function getHolidaysByYear(year) {
 	let holidaysArray = [];
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	let easterSunday = getEasterSunday(year);
 
-	HOLIDAYS.forEach(element => {
+	holidays.forEach(element => {
 		let date;
 		if (!element.daysToSum) {
 			date = new Date(element.date + "/" + year);
@@ -129,7 +129,7 @@ function getHolidaysByYear(year) {
  * @param {*} finalYear año final del rango
  * @returns {Array} Array con todos los festivos del año
  */
-function getHolidaysByYearInterval(initialYear, finalYear) {
+export function getHolidaysByYearInterval(initialYear, finalYear) {
 	let holidaysArray = [];
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	for (let i = initialYear; i <= finalYear; i++) {
@@ -139,7 +139,7 @@ function getHolidaysByYearInterval(initialYear, finalYear) {
 		};
 		let easterSunday = getEasterSunday(i);
 
-		HOLIDAYS.forEach(element => {
+		holidays.forEach(element => {
 			let date;
 			if (!element.daysToSum) {
 				date = new Date(element.date + "/" + i);
@@ -169,13 +169,8 @@ function getHolidaysByYearInterval(initialYear, finalYear) {
  * @param {Date} date Fecha que se busca saber si es o no festivo.
  * @returns {Boolean} Booleano que indica si es o no es festivo.
  */
-
-function isHoliday(date) {
-	return !!getHolidaysByYear(date.getFullYear()).find((holiday) => {
+export function isHoliday(date) {
+  return !!getHolidaysByYear(date.getFullYear()).find((holiday) => {
 		return holiday.date == formatDate(date);
 	})
 }
-
-module.exports.getHolidaysByYear = getHolidaysByYear;
-module.exports.getHolidaysByYearInterval = getHolidaysByYearInterval;
-module.exports.isHoliday = isHoliday;
