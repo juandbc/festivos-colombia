@@ -1,7 +1,10 @@
 /**
- * Modulo que contiene dos Objetos con las fechas de los días
- * festivos del año
- * @module holidays
+ * Datos de los días festivos de Colombia.
+ * Basado en la Ley 51 de 1983.
+ *
+ * Cada festivo puede definirse de dos formas:
+ *  - Con una fecha fija:  { date: "MM-DD", name, nextMonday }
+ *  - Relativo a Pascua:   { daysToSum: <número>, name, nextMonday }
  */
 export const holidays = [
 	{ date: "01/01", nextMonday: false, name: "Año Nuevo" },
@@ -11,7 +14,7 @@ export const holidays = [
 	{ daysToSum: -2, nextMonday: false, name: "Viernes Santo" },
 	{ date: "05/01", nextMonday: false, name: "Día del Trabajo" },
 	{ daysToSum: 40, nextMonday: true, name: "Ascensión del Señor" },
-	{ daysToSum: 60, nextMonday: true, name: "Corphus Christi" },
+	{ daysToSum: 60, nextMonday: true, name: "Corpus Christi" },
 	{ daysToSum: 71, nextMonday: true, name: "Sagrado Corazón de Jesús" },
 	{ date: "06/29", nextMonday: true, name: "San Pedro y San Pablo" },
 	{ date: "07/09", nextMonday: true, name: "Nuestra Señora del Rosario de Chiquinquirá" },

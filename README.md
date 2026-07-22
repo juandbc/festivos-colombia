@@ -18,17 +18,17 @@ npm install festivos-colombia
 Modulo que contiene la lógica para obtener los días festivos
 
 - [festivos-colombia](#festivos-colombia)
-  - [applyTwoDigits(number)](#applyTwoDigits)
-  - [formatDate(date)](#formatDate)
+  - [pad2(number)](#pad2)
+  - [toColombiaDateFormat(date)](#toColombiaDateFormat)
   - [getEasterSunday(year)](#getEasterSunday)
   - [getNextMonday(date)](#getNextMonday)
   - [sumDay(stringDate, dayToSum)](#sumDay)
   - [getHolidaysByYear(year)](#getHolidaysByYear)
-  - [getHolidaysByYear(initialYear, finalYear)](#getHolidaysByYear)
+  - [getHolidaysByYearInterval(initialYear, finalYear)](#getHolidaysByYear)
   - [isHoliday(date)](#isHoliday)
 
 
-### applyTwoDigits
+### pad2
 Aplica el formato de dos dígitos a un número menor que diez  
 **Kind**: inner method of [<code>festivos-colombia</code>]  
 **Returns**: <code>string</code> - texto formateado  
@@ -40,7 +40,7 @@ Aplica el formato de dos dígitos a un número menor que diez
 | number | <code>number</code> | número a aplicar el formato |
 
 
-### formatDate
+### toColombiaDateFormat
 Aplica el formato DD/MM/YYYY a una fecha  
 **Kind**: inner method of [<code>festivos-colombia</code>]  
 **Returns**: <code>string</code> texto de la fecha formateada
@@ -106,7 +106,7 @@ Calcula y retorna el listado de festivos de un año dado(year) ⇒ <code>Array</
 | year  | <code>number</code> | número del año |
 
 
-### getHolidaysByYear
+### getHolidaysByYearInterval
 
 Calcula todos los días festivos de un rango de años(initialYear, finalYear) ⇒ <code>Array</code>  
 **Kind**: inner method of [<code>festivos-colombia</code>]  

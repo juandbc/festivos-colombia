@@ -4,12 +4,14 @@
  * @module festivos-colombia
  */
 const {
+  getHolidayByDate,
   getHolidaysByYear,
   getHolidaysByYearInterval,
-  isHoliday
+  isHoliday,
 } = require("./src/index.js");
 module.exports = {
+  getHolidayByDate,
   getHolidaysByYear,
   getHolidaysByYearInterval,
-  isHoliday
+  isHoliday,
 };

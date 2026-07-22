@@ -3,31 +3,27 @@
  * @module festivos-colombia
  */
 
-import { holidays } from "../holidays.js";
+import { holidays } from "./holidays.js";
 
 /**
- * @function applyTwoDigits
+ * @function pad2
  * Aplica el formato de dos dígitos a un número menor que diez
  * @author Juan Bermudez
  * @since 1.0
  * @param {number} number número a aplicar el formato
  * @returns {string} texto formateado
  */
-const applyTwoDigits = (number) => {
-	return number < 10 ? "0" + number : number;
-}
+const pad2 = (number) => String(number).padStart(2, "0");
 
 /**
- * @function formatDate
+ * @function toColombiaDateFormat
  * Aplica el formato DD/MM/YYYY a una fecha
  * @author Juan Bermudez
  * @since 1.0
  * @param {Date} date objeto con la fecha a formatear
  * @returns {string} texto de la fecha formateada
  */
-const formatDate = (date) => {
-  return applyTwoDigits(date.getDate()) + "/" + applyTwoDigits(date.getMonth() + 1) + "/" + date.getFullYear();
-}
+const toColombiaDateFormat = (date) =>  `${pad2(date.getDate())}/${pad2(date.getMonth() + 1)}/${date.getFullYear()}`;
 
 /**
  * @function getEasterSunday
@@ -39,19 +35,15 @@ const formatDate = (date) => {
  * @returns {Date} Retorna el domingo de resurrección/pascua
  */
 const getEasterSunday = (year) => {
-	let a, b, c, d, e, day;
-	a = year % 19;
-	b = year % 4;
-	c = year % 7;
-	d = (19 * a + 24) % 30;
-	e = (2 * b + 4 * c + 6 * d + 5) % 7;
-	day = 22 + d + e;
-
-	if (day >= 1 && day <= 31) {
-		return new Date(`03/${applyTwoDigits(day)}/${year}`);
-	} else {
-		return new Date(`04/${applyTwoDigits(day - 31)}/${year}`);
-	}
+  const a = year % 19;
+	const b = year % 4;
+	const c = year % 7;
+	const d = (19 * a + 24) % 30;
+	const e = (2 * b + 4 * c + 6 * d + 5) % 7;
+	const day = 22 + d + e;
+	const month = day <= 31 ? 3 : 4;
+	const dayOfMonth = day <= 31 ? day : day - 31;
+	return new Date(year, month - 1, dayOfMonth);
 }
 
 /**
@@ -93,32 +85,29 @@ const sumDay = (stringDate, dayToSum) => {
  * @returns {Array} Array con todos los festivos del año
  */
 export const getHolidaysByYear = (year) => {
-	let holidaysArray = [];
+ 	if (typeof year !== "number" || !Number.isFinite(year)) {
+		throw new TypeError(`El año debe ser un número finito, recibido: ${year}`);
+	}
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	let easterSunday = getEasterSunday(year);
 
-	holidays.forEach(element => {
-		let date;
-		if (!element.daysToSum) {
-			date = new Date(element.date + "/" + year);
-		} else {
-			date = sumDay(easterSunday.toDateString(), element.daysToSum);
-		}
+	return holidays.map(rule => {
+    let baseDate = rule.daysToSum != null
+      ? sumDay(easterSunday.toDateString(), rule.daysToSum)
+      : new Date(rule.date + "/" + year);
 
-		if (element.nextMonday) {
-			date = getNextMonday(date);
-		}
-		holidaysArray.push({
-			date: formatDate(date),
-			name: element.name,
-			static: element.nextMonday
-		});
+		if (rule.nextMonday) baseDate = getNextMonday(baseDate);
+
+		return {
+			date: toColombiaDateFormat(baseDate),
+			name: rule.name,
+			static: rule.nextMonday
+		};
 	});
-	return holidaysArray;
 }
 
 /**
- * @function getHolidaysByYear
+ * @function getHolidaysByYearInterval
  * Calcula todos los días festivos de un rango de años
  * @author Juan Bermudez
  * @since 1.0
@@ -127,47 +116,45 @@ export const getHolidaysByYear = (year) => {
  * @returns {Array} Array con todos los festivos del año
  */
 export const getHolidaysByYearInterval = (initialYear, finalYear) => {
+	if (typeof initialYear !== "number" || typeof finalYear !== "number") {
+		throw new TypeError("Los años deben ser números.");
+	}
+	if (finalYear < initialYear) {
+		throw new RangeError("El año final debe ser mayor o igual al año inicial.");
+	}
 	let holidaysArray = [];
-	//Obtiene el domingo de pascua para calcular los días litúrgicos
-	for (let i = initialYear; i <= finalYear; i++) {
-		let year = {
-			year : i,
-			holidays: []
-		};
-		let easterSunday = getEasterSunday(i);
-
-		holidays.forEach(element => {
-			let date;
-			if (!element.daysToSum) {
-				date = new Date(element.date + "/" + i);
-			} else {
-				date = sumDay(easterSunday.toDateString(), element.daysToSum);
-			}
-
-			if (element.nextMonday) {
-				date = getNextMonday(date);
-			}
-			year.holidays.push({
-				date: formatDate(date),
-				name: element.name,
-				static: element.nextMonday
-			});
-		});
-		holidaysArray.push(year);
+	for (let year = initialYear; year <= finalYear; year++) {
+		holidaysArray.push({ year, holidays: getHolidaysByYear(year) });
 	}
 	return holidaysArray;
 }
+
+/**
+ * @function getHolidayByDate
+ * Devuelve el festivo que coincide con la fecha, o `null` si no es festivo.
+ * @author Juan Bermudez
+ * @since 1.2.0
+ * @param {Date | string} date
+ * @returns {{date: string, name: string, static: boolean} | null}
+ */
+ export const getHolidayByDate = (date) => {
+	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
+	if (Number.isNaN(d.getTime())) return null;
+	const target = toColombiaDateFormat(d);
+	return getHolidaysByYear(d.getUTCFullYear()).find((h) => h.date === target) ?? null;
+ };
 
 /**
  * @function isHoliday
  * Calcula si un dia en especifico es festivo
  * @author Santiago Alarcón
  * @since 1.0.1
- * @param {Date} date Fecha que se busca saber si es o no festivo.
+ * @param {Date | string} date Fecha que se busca saber si es o no festivo.
  * @returns {Boolean} Booleano que indica si es o no es festivo.
  */
-export const isHoliday = (date) => {
-  return !!getHolidaysByYear(date.getFullYear()).find((holiday) => {
-		return holiday.date == formatDate(date);
-	})
-}
+ export const isHoliday = (date) => {
+	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
+	if (Number.isNaN(d.getTime())) return false;
+	const target = toColombiaDateFormat(d);
+	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
+ };
