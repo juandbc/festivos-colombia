@@ -7,12 +7,17 @@ Módulo de JavaScript para obtener los días festivos de Colombia.
 
 Requiere **Node.js >= 18**.
 
-> [!WARNING]
-> La versión publicada del proyecto en NPM está desactualizada (1.0.0) debido a que perdí el acceso a mi cuenta.
-> Cuando recupere el acceso, actualizaré la versión (1.2.0).
-
 ```bash
 npm install festivos-colombia
+```
+
+> [!IMPORTANT]
+> La versión publicada del proyecto en NPM está desactualizada (1.0.0) debido a que perdí mi cuenta.
+> Cuando recupere la propiedad del paquete, actualizaré las versiones. Mientras tanto, realizar la
+> instalación desde GitHub
+
+```bash
+npm install git+https://github.com/juandbc/festivos-colombia
 ```
 
 # Documentación
@@ -31,111 +36,104 @@ Modulo que contiene la lógica para obtener los días festivos
   - [getHolidaysByYearInterval(initialYear, finalYear)](#getHolidaysByYear)
   - [isHoliday(date)](#isHoliday)
 
-
 ### pad2
+
 Aplica el formato de dos dígitos a un número menor que diez  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>string</code> - texto formateado  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `string` - texto formateado  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param  | Type                | Description                 |
-| ------ | ------------------- | --------------------------- |
-| number | <code>number</code> | número a aplicar el formato |
-
+| Param  | Type     | Description                 |
+| ------ | -------- | --------------------------- |
+| number | `number` | número a aplicar el formato |
 
 ### toColombiaDateFormat
-Aplica el formato DD/MM/YYYY a una fecha  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>string</code> texto de la fecha formateada
+
+Aplica el formato colombiano (DD/MM/YYYY) a una fecha  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `string` texto de la fecha formateada
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param | Type              | Description                     |
-| ----- | ----------------- | ------------------------------- |
-| date  | <code>Date</code> | objeto con la fecha a formatear |
-
+| Param | Type   | Description                     |
+| ----- | ------ | ------------------------------- |
+| date  | `Date` | objeto con la fecha a formatear |
 
 ### getEasterSunday
 
 Algoritmo propuesto por Ian Stewart en 2001 para calcular la fecha  
-exacta del domingo de resurrección/pascua(year) ⇒ <code>Date</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Date</code> - Retorna el domingo de resurrección/pascua  
+exacta del domingo de resurrección/pascua(year) ⇒ `Date`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Date` - Retorna el domingo de resurrección/pascua  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param | Type                | Description    |
-| ----- | ------------------- | -------------- |
-| year  | <code>number</code> | número del año |
-
+| Param | Type     | Description    |
+| ----- | -------- | -------------- |
+| year  | `number` | número del año |
 
 ### getNextMonday
 
-Calcula el próximo lunes de una fecha dada(date) ⇒ <code>Date</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Date</code> - retorna el próximo lunes a la fecha  
+Calcula el próximo lunes de una fecha dada(date) ⇒ `Date`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Date` - retorna el próximo lunes a la fecha  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param | Type              | Description      |
-| ----- | ----------------- | ---------------- |
-| date  | <code>Date</code> | fecha de partida |
-
+| Param | Type   | Description      |
+| ----- | ------ | ---------------- |
+| date  | `Date` | fecha de partida |
 
 ### sumDay
 
-Suma una cantidad de días a una fecha dada(stringDate, dayToSum) ⇒ <code>Date</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Date</code> - retorna la nueva fecha con los días sumados  
+Suma una cantidad de días a una fecha dada(stringDate, dayToSum) ⇒ `Date`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Date` - retorna la nueva fecha con los días sumados  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param      | Type                | Description              |
-| ---------- | ------------------- | ------------------------ |
-| stringDate | <code>string</code> | objeto de la fecha       |
-| dayToSum   | <code>number</code> | cantidad de días a sumar |
-
+| Param      | Type     | Description              |
+| ---------- | -------- | ------------------------ |
+| stringDate | `string` | objeto de la fecha       |
+| dayToSum   | `number` | cantidad de días a sumar |
 
 ### getHolidaysByYear
 
-Calcula y retorna el listado de festivos de un año dado(year) ⇒ <code>Array</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Array</code> - Array con todos los festivos del año  
+Calcula y retorna el listado de festivos de un año dado(year) ⇒ `Array`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Array` - Array con todos los festivos del año  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param | Type                | Description    |
-| ----- | ------------------- | -------------- |
-| year  | <code>number</code> | número del año |
-
+| Param | Type     | Description    |
+| ----- | -------- | -------------- |
+| year  | `number` | número del año |
 
 ### getHolidaysByYearInterval
 
-Calcula todos los días festivos de un rango de años(initialYear, finalYear) ⇒ <code>Array</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Array</code> - Array con todos los festivos del año  
+Calcula todos los días festivos de un rango de años(initialYear, finalYear) ⇒ `Array`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Array` - Array con todos los festivos del año  
 **Since**: 1.0  
 **Author**: Juan Bermudez
 
-| Param       | Type                | Description             |
-| ----------- | ------------------- | ----------------------- |
-| initialYear | <code>number</code> | año de inicio del rango |
-| finalYear   | <code>number</code> | año final del rango     |
-
+| Param       | Type     | Description             |
+| ----------- | -------- | ----------------------- |
+| initialYear | `number` | año de inicio del rango |
+| finalYear   | `number` | año final del rango     |
 
 ### isHoliday
 
-Calcula si un dia en especifico es festivo(date) ⇒ <code>Boolean</code>  
-**Kind**: inner method of [<code>festivos-colombia</code>]  
-**Returns**: <code>Boolean</code> - Booleano que indica si es o no es festivo.  
+Calcula si un dia en especifico es festivo(date) ⇒ `Boolean`  
+**Kind**: inner method of [`festivos-colombia`]  
+**Returns**: `Boolean` - Booleano que indica si es o no es festivo.  
 **Since**: 1.0.1  
 **Author**: Santiago Alarcón
 
-| Param | Type              | Description                                  |
-| ----- | ----------------- | -------------------------------------------- |
-| date  | <code>Date</code> | Fecha que se busca saber si es o no festivo. |
-
+| Param | Type          | Description                                  |
+| ----- | ------------- | -------------------------------------------- |
+| date  | `Date/string` | Fecha que se busca saber si es o no festivo. |
 
 ## Uso
 
@@ -148,6 +146,7 @@ console.log(isHoliday("2024-08-07")); // true
 ```
 
 ### ESM
+
 ```javascript
 import { getHolidaysByYear, isHoliday } from "festivos-colombia";
 ```
@@ -156,12 +155,11 @@ import { getHolidaysByYear, isHoliday } from "festivos-colombia";
 let year = 2018;
 
 let holidays = getHolidaysByYear(year);
-holidays.forEach((element) => {
-  if (element.static) {
-    console.log(element.date + " - " + element.name);
-  } else {
-    console.log(element.date + " - " + element.name);
-  }
+holidays.forEach((obj) => {
+  console.log("Año: " + obj.year);
+  obj.holidays.forEach((element) =>
+    console.log(`${element.date} - ${element.name}`),
+  );
 });
 
 // OUTPUT
@@ -187,15 +185,10 @@ holidays.forEach((element) => {
 holidays = getHolidaysByYearInterval(year, 2026);
 holidays.forEach((obj) => {
   console.log("Año: " + obj.year);
-  obj.holidays.forEach((element) => {
-    if (element.static) {
-      console.log(element.date + " - " + element.name);
-    } else {
-      console.log(element.date + " - " + element.name);
-    }
-  });
+  obj.holidays.forEach((element) =>
+    console.log(`${element.date} - ${element.name}`),
+  );
 });
-
 
 // OUTPUT
 // Año: 2018
