@@ -17,7 +17,11 @@ export const holidays = [
 	{ daysToSum: 60, nextMonday: true, name: "Corpus Christi" },
 	{ daysToSum: 71, nextMonday: true, name: "Sagrado Corazón de Jesús" },
 	{ date: "06/29", nextMonday: true, name: "San Pedro y San Pablo" },
-	{ date: "07/09", nextMonday: true, name: "Nuestra Señora del Rosario de Chiquinquirá" },
+	{
+		date: "07/09",
+		nextMonday: true,
+		name: "Nuestra Señora del Rosario de Chiquinquirá",
+	},
 	{ date: "07/20", nextMonday: false, name: "Día de la Independencia" },
 	{ date: "08/07", nextMonday: false, name: "Batalla de Boyacá" },
 	{ date: "08/15", nextMonday: true, name: "La Asunción de la Virgen" },
@@ -25,7 +29,7 @@ export const holidays = [
 	{ date: "11/01", nextMonday: true, name: "Todos los Santos" },
 	{ date: "11/11", nextMonday: true, name: "Independencia de Cartagena" },
 	{ date: "12/08", nextMonday: false, name: "Día de la Inmaculada Concepción" },
-	{ date: "12/25", nextMonday: false, name: "Día de Navidad" }
+	{ date: "12/25", nextMonday: false, name: "Día de Navidad" },
 ];
 
 /*

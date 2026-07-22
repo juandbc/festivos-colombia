@@ -1,41 +1,44 @@
 {
-  "name": "festivos-colombia",
-  "version": "1.2.0",
-  "description": "Módulo para obtener los días festivos de Colombia.",
-  "type": "module",
-  "main": "./index.cjs",
-  "module": "./src/index.js",
-  "exports": {
-    ".": {
-      "import": "./src/index.js",
-      "require": "./index.cjs"
-    }
-  },
-  "files": [
-    "src",
-    "index.cjs",
-    "README.md",
-    "LICENSE.md"
-  ],
-  "scripts": {
-    "test": "node --test"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "keywords": [
-    "colombia",
-    "colombian",
-    "festivos",
-    "holidays",
-    "public-holidays",
-    "calendar",
-    "colombia-holidays"
-  ],
-  "author": "Juan David Bermudez",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/juandbc/festivos-colombia/issues"
-  },
-  "homepage": "https://github.com/juandbc/festivos-colombia#readme"
+	"name": "festivos-colombia",
+	"version": "1.2.0",
+	"description": "Módulo para obtener los días festivos de Colombia.",
+	"type": "module",
+	"main": "./index.cjs",
+	"module": "./src/index.js",
+	"exports": {
+		".": {
+			"import": "./src/index.js",
+			"require": "./index.cjs"
+		}
+	},
+	"files": [
+		"src",
+		"index.cjs",
+		"README.md",
+		"LICENSE.md"
+	],
+	"scripts": {
+		"test": "node --test"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"keywords": [
+		"colombia",
+		"colombian",
+		"festivos",
+		"holidays",
+		"public-holidays",
+		"calendar",
+		"colombia-holidays"
+	],
+	"author": "Juan David Bermudez",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/juandbc/festivos-colombia/issues"
+	},
+	"homepage": "https://github.com/juandbc/festivos-colombia#readme",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.4"
+	}
 }

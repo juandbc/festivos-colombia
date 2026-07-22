@@ -23,7 +23,8 @@ const pad2 = (number) => String(number).padStart(2, "0");
  * @param {Date} date objeto con la fecha a formatear
  * @returns {string} texto de la fecha formateada
  */
-const toColombiaDateFormat = (date) =>  `${pad2(date.getDate())}/${pad2(date.getMonth() + 1)}/${date.getFullYear()}`;
+const toColombiaDateFormat = (date) =>
+	`${pad2(date.getDate())}/${pad2(date.getMonth() + 1)}/${date.getFullYear()}`;
 
 /**
  * @function getEasterSunday
@@ -35,7 +36,7 @@ const toColombiaDateFormat = (date) =>  `${pad2(date.getDate())}/${pad2(date.get
  * @returns {Date} Retorna el domingo de resurrección/pascua
  */
 const getEasterSunday = (year) => {
-  const a = year % 19;
+	const a = year % 19;
 	const b = year % 4;
 	const c = year % 7;
 	const d = (19 * a + 24) % 30;
@@ -44,7 +45,7 @@ const getEasterSunday = (year) => {
 	const month = day <= 31 ? 3 : 4;
 	const dayOfMonth = day <= 31 ? day : day - 31;
 	return new Date(year, month - 1, dayOfMonth);
-}
+};
 
 /**
  * @function getNextMonday
@@ -59,7 +60,7 @@ const getNextMonday = (date) => {
 		date.setDate(date.getDate() + 1);
 	}
 	return date;
-}
+};
 
 /**
  * @function sumDay
@@ -74,7 +75,7 @@ const sumDay = (stringDate, dayToSum) => {
 	let date = new Date(stringDate);
 	date.setDate(date.getDate() + dayToSum);
 	return date;
-}
+};
 
 /**
  * @function getHolidaysByYear
@@ -85,26 +86,27 @@ const sumDay = (stringDate, dayToSum) => {
  * @returns {Array} Array con todos los festivos del año
  */
 export const getHolidaysByYear = (year) => {
- 	if (typeof year !== "number" || !Number.isFinite(year)) {
+	if (typeof year !== "number" || !Number.isFinite(year)) {
 		throw new TypeError(`El año debe ser un número finito, recibido: ${year}`);
 	}
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	let easterSunday = getEasterSunday(year);
 
-	return holidays.map(rule => {
-    let baseDate = rule.daysToSum != null
-      ? sumDay(easterSunday.toDateString(), rule.daysToSum)
-      : new Date(rule.date + "/" + year);
+	return holidays.map((rule) => {
+		let baseDate =
+			rule.daysToSum != null
+				? sumDay(easterSunday.toDateString(), rule.daysToSum)
+				: new Date(rule.date + "/" + year);
 
 		if (rule.nextMonday) baseDate = getNextMonday(baseDate);
 
 		return {
 			date: toColombiaDateFormat(baseDate),
 			name: rule.name,
-			static: rule.nextMonday
+			static: rule.nextMonday,
 		};
 	});
-}
+};
 
 /**
  * @function getHolidaysByYearInterval
@@ -127,7 +129,7 @@ export const getHolidaysByYearInterval = (initialYear, finalYear) => {
 		holidaysArray.push({ year, holidays: getHolidaysByYear(year) });
 	}
 	return holidaysArray;
-}
+};
 
 /**
  * @function getHolidayByDate
@@ -137,12 +139,14 @@ export const getHolidaysByYearInterval = (initialYear, finalYear) => {
  * @param {Date | string} date
  * @returns {{date: string, name: string, static: boolean} | null}
  */
- export const getHolidayByDate = (date) => {
+export const getHolidayByDate = (date) => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return null;
 	const target = toColombiaDateFormat(d);
-	return getHolidaysByYear(d.getUTCFullYear()).find((h) => h.date === target) ?? null;
- };
+	return (
+		getHolidaysByYear(d.getUTCFullYear()).find((h) => h.date === target) ?? null
+	);
+};
 
 /**
  * @function isHoliday
@@ -152,9 +156,9 @@ export const getHolidaysByYearInterval = (initialYear, finalYear) => {
  * @param {Date | string} date Fecha que se busca saber si es o no festivo.
  * @returns {Boolean} Booleano que indica si es o no es festivo.
  */
- export const isHoliday = (date) => {
+export const isHoliday = (date) => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return false;
 	const target = toColombiaDateFormat(d);
 	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
- };
+};
