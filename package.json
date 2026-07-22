@@ -1,6 +1,6 @@
 {
 	"name": "festivos-colombia",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Módulo para obtener los días festivos de Colombia.",
 	"type": "module",
 	"main": "./index.cjs",
@@ -29,11 +29,14 @@
 		"festivos",
 		"holidays",
 		"public-holidays",
-		"calendar",
-		"colombia-holidays"
+		"colombian-holidays"
 	],
 	"author": "Juan David Bermudez",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/juandbc/festivos-colombia.git"
+	},
 	"bugs": {
 		"url": "https://github.com/juandbc/festivos-colombia/issues"
 	},
