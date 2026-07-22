@@ -1,32 +1,31 @@
 /**
  * Modulo que contiene la lógica para obtener los días festivos
- * @module calendar
- * @author Juan Bermudez <juanbermucele@hotmail.com>
- * @since 1.0
+ * @module festivos-colombia
  */
-import {holidays} from "../holidays.js";
+
+import { holidays } from "../holidays.js";
 
 /**
  * @function applyTwoDigits
  * Aplica el formato de dos dígitos a un número menor que diez
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
- * @param {number} number
+ * @param {number} number número a aplicar el formato
  * @returns {string} texto formateado
  */
-function applyTwoDigits(number) {
+const applyTwoDigits = (number) => {
 	return number < 10 ? "0" + number : number;
 }
 
 /**
  * @function formatDate
  * Aplica el formato DD/MM/YYYY a una fecha
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
  * @param {Date} date objeto con la fecha a formatear
  * @returns {string} texto de la fecha formateada
  */
-function formatDate(date) {
+const formatDate = (date) => {
   return applyTwoDigits(date.getDate()) + "/" + applyTwoDigits(date.getMonth() + 1) + "/" + date.getFullYear();
 }
 
@@ -34,12 +33,12 @@ function formatDate(date) {
  * @function getEasterSunday
  * Algoritmo propuesto por Ian Stewart en 2001 para calcular la fecha
  * exacta del domingo de resurrección/pascua
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
  * @param {number} year número del año
  * @returns {Date} Retorna el domingo de resurrección/pascua
  */
-function getEasterSunday(year) {
+const getEasterSunday = (year) => {
 	let a, b, c, d, e, day;
 	a = year % 19;
 	b = year % 4;
@@ -58,16 +57,14 @@ function getEasterSunday(year) {
 /**
  * @function getNextMonday
  * Calcula el próximo lunes de una fecha dada
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
  * @param {Date} date fecha de partida
  * @returns {Date} retorna el próximo lunes a la fecha
  */
-function getNextMonday(date) {
-	//console.log("Fecha recibida: " + date.toDateString());
+const getNextMonday = (date) => {
 	while (date.getDay() !== 1) {
 		date.setDate(date.getDate() + 1);
-		//console.log("New date: " + date);
 	}
 	return date;
 }
@@ -75,13 +72,13 @@ function getNextMonday(date) {
 /**
  * @function sumDay
  * Suma una cantidad de días a una fecha dada
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
  * @param {string} stringDate objeto de la fecha
  * @param {number} dayToSum cantidad de días a sumar
  * @returns {Date} retorna la nueva fecha con los días sumados
  */
-function sumDay(stringDate, dayToSum) {
+const sumDay = (stringDate, dayToSum) => {
 	let date = new Date(stringDate);
 	date.setDate(date.getDate() + dayToSum);
 	return date;
@@ -90,12 +87,12 @@ function sumDay(stringDate, dayToSum) {
 /**
  * @function getHolidaysByYear
  * Calcula y retorna el listado de festivos de un año dado
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
  * @param {number} year número del año
  * @returns {Array} Array con todos los festivos del año
  */
-export function getHolidaysByYear(year) {
+export const getHolidaysByYear = (year) => {
 	let holidaysArray = [];
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	let easterSunday = getEasterSunday(year);
@@ -123,13 +120,13 @@ export function getHolidaysByYear(year) {
 /**
  * @function getHolidaysByYear
  * Calcula todos los días festivos de un rango de años
- * @author Juan Bermudez <juanbermucele@hotmail.com>
+ * @author Juan Bermudez
  * @since 1.0
- * @param {*} initialYear año de inicio del rango
- * @param {*} finalYear año final del rango
+ * @param {number} initialYear año de inicio del rango
+ * @param {number} finalYear año final del rango
  * @returns {Array} Array con todos los festivos del año
  */
-export function getHolidaysByYearInterval(initialYear, finalYear) {
+export const getHolidaysByYearInterval = (initialYear, finalYear) => {
 	let holidaysArray = [];
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	for (let i = initialYear; i <= finalYear; i++) {
@@ -164,12 +161,12 @@ export function getHolidaysByYearInterval(initialYear, finalYear) {
 /**
  * @function isHoliday
  * Calcula si un dia en especifico es festivo
- * @author Santiago Alarcón <salarconlagos@gmail.com>
+ * @author Santiago Alarcón
  * @since 1.0.1
  * @param {Date} date Fecha que se busca saber si es o no festivo.
  * @returns {Boolean} Booleano que indica si es o no es festivo.
  */
-export function isHoliday(date) {
+export const isHoliday = (date) => {
   return !!getHolidaysByYear(date.getFullYear()).find((holiday) => {
 		return holiday.date == formatDate(date);
 	})

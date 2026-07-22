@@ -11,7 +11,12 @@
       "require": "./index.cjs"
     }
   },
-  "files": ["src", "index.cjs", "README.md", "LICENSE.md"],
+  "files": [
+    "src",
+    "index.cjs",
+    "README.md",
+    "LICENSE.md"
+  ],
   "scripts": {
     "test": "node --test test/"
   },

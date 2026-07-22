@@ -1,6 +1,7 @@
 /**
  * festivos-colombia — CommonJS entry point.
  * Re-exports the ESM implementation via dynamic import shim.
+ * @module festivos-colombia
  */
 const {
   getHolidaysByYear,
