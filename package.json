@@ -3,12 +3,12 @@
 	"version": "1.2.1",
 	"description": "Módulo para obtener los días festivos de Colombia.",
 	"type": "module",
-	"main": "./index.cjs",
+	"main": "./src/index.cjs",
 	"module": "./src/index.js",
 	"exports": {
 		".": {
-			"import": "./src/index.js",
-			"require": "./index.cjs"
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.cjs"
 		}
 	},
 	"files": [
@@ -18,10 +18,16 @@
 		"LICENSE.md"
 	],
 	"scripts": {
-		"test": "node --test"
+		"build:esm": "tsc --project tsconfig.esm.json",
+		"build:cjs": "cp -r src/cjs dist/cjs",
+		"build": "npm run build:esm && npm run build:cjs",
+		"test": "tsx --test test/holidays.test.ts"
 	},
 	"engines": {
 		"node": ">=18"
+	},
+	"publishConfig": {
+		"@OWNER:registry": "https://npm.pkg.github.com"
 	},
 	"keywords": [
 		"colombia",
@@ -35,13 +41,16 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/juandbc/festivos-colombia.git"
+		"url": "https://github.com/juandbc/festivos-colombia.git"
 	},
 	"bugs": {
+		"type": "git",
 		"url": "https://github.com/juandbc/festivos-colombia/issues"
 	},
 	"homepage": "https://github.com/juandbc/festivos-colombia#readme",
 	"devDependencies": {
-		"@biomejs/biome": "2.5.4"
+		"@biomejs/biome": "2.5.4",
+		"tsx": "^4.23.11",
+		"typescript": "^7.0.2"
 	}
 }

@@ -17,11 +17,7 @@ export const holidays = [
 	{ daysToSum: 60, nextMonday: true, name: "Corpus Christi" },
 	{ daysToSum: 71, nextMonday: true, name: "Sagrado Corazón de Jesús" },
 	{ date: "06/29", nextMonday: true, name: "San Pedro y San Pablo" },
-	{
-		date: "07/09",
-		nextMonday: true,
-		name: "Nuestra Señora del Rosario de Chiquinquirá",
-	},
+	{ date: "07/09", nextMonday: true, name: "Nuestra Señora del Rosario de Chiquinquirá" },
 	{ date: "07/20", nextMonday: false, name: "Día de la Independencia" },
 	{ date: "08/07", nextMonday: false, name: "Batalla de Boyacá" },
 	{ date: "08/15", nextMonday: true, name: "La Asunción de la Virgen" },
@@ -31,10 +27,3 @@ export const holidays = [
 	{ date: "12/08", nextMonday: false, name: "Día de la Inmaculada Concepción" },
 	{ date: "12/25", nextMonday: false, name: "Día de Navidad" },
 ];
-
-/*
-pascua entre marzo 22 y abril 25
-ascensión 40 días después de pascua
-corpus christi 60 días después de pascua
-sagrado corazon 71 días después de pascua
-*/

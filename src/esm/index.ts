@@ -1,10 +1,20 @@
 /**
- * festivos-colombia — CommonJS entry point.
- * Re-exports the ESM implementation via dynamic import shim.
+ * Modulo que contiene la lógica para obtener los días festivos
  * @module festivos-colombia
  */
 
-const holidays = require("./src/holidays.cjs");
+import { holidays } from "./holidays.ts";
+
+export interface Holiday {
+	date: string;
+	name: string;
+	static: boolean;
+}
+
+export interface YearHolidays {
+	year: number;
+	holidays: Holiday[];
+}
 
 /**
  * @function pad2
@@ -14,7 +24,7 @@ const holidays = require("./src/holidays.cjs");
  * @param {number} number número a aplicar el formato
  * @returns {string} texto formateado
  */
-const pad2 = (number) => String(number).padStart(2, "0");
+const pad2 = (number: number): string => String(number).padStart(2, "0");
 
 /**
  * @function toColombiaDateFormat
@@ -24,7 +34,7 @@ const pad2 = (number) => String(number).padStart(2, "0");
  * @param {Date} date objeto con la fecha a formatear
  * @returns {string} texto de la fecha formateada
  */
-const toColombiaDateFormat = (date) =>
+const toColombiaDateFormat = (date: Date): string =>
 	`${pad2(date.getDate())}/${pad2(date.getMonth() + 1)}/${date.getFullYear()}`;
 
 /**
@@ -36,7 +46,7 @@ const toColombiaDateFormat = (date) =>
  * @param {number} year número del año
  * @returns {Date} Retorna el domingo de resurrección/pascua
  */
-const getEasterSunday = (year) => {
+const getEasterSunday = (year: number): Date => {
 	const a = year % 19;
 	const b = year % 4;
 	const c = year % 7;
@@ -56,7 +66,7 @@ const getEasterSunday = (year) => {
  * @param {Date} date fecha de partida
  * @returns {Date} retorna el próximo lunes a la fecha
  */
-const getNextMonday = (date) => {
+const getNextMonday = (date: Date): Date => {
 	while (date.getDay() !== 1) {
 		date.setDate(date.getDate() + 1);
 	}
@@ -72,7 +82,7 @@ const getNextMonday = (date) => {
  * @param {number} dayToSum cantidad de días a sumar
  * @returns {Date} retorna la nueva fecha con los días sumados
  */
-const sumDay = (stringDate, dayToSum) => {
+const sumDay = (stringDate: string, dayToSum: number): Date => {
 	const date = new Date(stringDate);
 	date.setDate(date.getDate() + dayToSum);
 	return date;
@@ -84,9 +94,9 @@ const sumDay = (stringDate, dayToSum) => {
  * @author Juan Bermudez
  * @since 1.0
  * @param {number} year número del año
- * @returns {Array} Array con todos los festivos del año
+ * @returns {Holiday[]} Array con todos los festivos del año
  */
-const getHolidaysByYear = (year) => {
+export const getHolidaysByYear = (year: number): Holiday[] => {
 	if (typeof year !== "number" || !Number.isFinite(year)) {
 		throw new TypeError(`El año debe ser un número finito, recibido: ${year}`);
 	}
@@ -116,9 +126,12 @@ const getHolidaysByYear = (year) => {
  * @since 1.0
  * @param {number} initialYear año de inicio del rango
  * @param {number} finalYear año final del rango
- * @returns {Array} Array con todos los festivos del año
+ * @returns {YearHolidays[]} Array con todos los festivos del año
  */
-const getHolidaysByYearInterval = (initialYear, finalYear) => {
+export const getHolidaysByYearInterval = (
+	initialYear: number,
+	finalYear: number,
+): YearHolidays[] => {
 	if (typeof initialYear !== "number" || typeof finalYear !== "number") {
 		throw new TypeError("Los años deben ser números.");
 	}
@@ -140,7 +153,9 @@ const getHolidaysByYearInterval = (initialYear, finalYear) => {
  * @param {Date | string} date
  * @returns {{date: string, name: string, static: boolean} | null}
  */
-const getHolidayByDate = (date) => {
+export const getHolidayByDate = (
+	date: Date | string,
+): { date: string; name: string; static: boolean } | null => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return null;
 	const target = toColombiaDateFormat(d);
@@ -157,16 +172,9 @@ const getHolidayByDate = (date) => {
  * @param {Date | string} date Fecha que se busca saber si es o no festivo.
  * @returns {Boolean} Booleano que indica si es o no es festivo.
  */
-const isHoliday = (date) => {
+export const isHoliday = (date: Date | string): boolean => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return false;
 	const target = toColombiaDateFormat(d);
 	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
-};
-
-module.exports = {
-	getHolidayByDate,
-	getHolidaysByYear,
-	getHolidaysByYearInterval,
-	isHoliday,
 };
