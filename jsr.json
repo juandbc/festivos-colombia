@@ -1,0 +1,6 @@
+{
+	"name": "@juandbc/festivos-colombia",
+	"version": "1.2.1",
+	"license": "MIT",
+	"exports": "./src/esm/index.ts"
+}
