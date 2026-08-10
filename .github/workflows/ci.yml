@@ -10,6 +10,11 @@ on:
       - "tsconfig.*"
   pull_request:
     branches: [ "master" ]
+    paths:
+      - "src/**"
+      - "test/**"
+      - "package*.json"
+      - "tsconfig.*"
 
 jobs:
   build:
@@ -30,3 +35,10 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+    - name: Setup Biome
+      uses: biomejs/setup-biome@v2
+      with:
+        version: latest
+    - name: Run Biome
+      run: biome ci .
