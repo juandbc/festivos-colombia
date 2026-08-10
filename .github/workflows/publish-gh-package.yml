@@ -8,18 +8,7 @@ on:
         types: [published]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v7
-            - uses: actions/setup-node@v6.5.0
-              with:
-                  node-version: 22
-            - run: npm ci
-            - run: npm test
-
     publish-gpr:
-        needs: build
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -30,13 +19,12 @@ jobs:
               with:
                   node-version: 22
                   registry-url: https://npm.pkg.github.com/
-            - run: npm ci
+            - run: npm run build
             - run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     publish-jsr:
-        needs: build
         runs-on: ubuntu-latest
         permissions:
               contents: read
