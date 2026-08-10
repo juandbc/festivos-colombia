@@ -1,15 +1,8 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src/esm",
-    "outDir": "dist/esm",
-    "target": "ES2022",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "declaration": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "rewriteRelativeImportExtensions": true,
-    "allowImportingTsExtensions": true
-  },
-  "include": ["src/esm"]
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist/esm"
+  }
 }

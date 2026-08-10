@@ -6,7 +6,7 @@ import {
 	getHolidaysByYear,
 	getHolidaysByYearInterval,
 	isHoliday,
-} from "../src/esm/index.ts";
+} from "../src/index.ts";
 
 describe("#getHolidaysByYear", () => {
 	it("should returns 19 when year is 2024", () => {

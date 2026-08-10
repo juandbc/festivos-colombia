@@ -3,8 +3,9 @@
 	"version": "1.3.0",
 	"description": "Módulo para obtener los días festivos de Colombia.",
 	"type": "module",
-	"main": "./src/index.cjs",
-	"module": "./src/index.js",
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
+	"types": "dist/esm/index.d.ts",
 	"exports": {
 		".": {
 			"import": {
@@ -12,8 +13,8 @@
 				"default": "./dist/esm/index.js"
 			},
 			"require": {
-				"types": "./dist/esm/index.d.ts",
-				"default": "./dist/cjs/index.cjs"
+				"types": "./dist/cjs/index.d.ts",
+				"default": "./dist/cjs/index.js"
 			}
 		}
 	},
@@ -25,8 +26,9 @@
 	],
 	"scripts": {
 		"build:esm": "tsc --project tsconfig.esm.json",
-		"build:cjs": "cp -r src/cjs dist/cjs",
+		"build:cjs": "tsc --project tsconfig.cjs.json",
 		"build": "npm run build:esm && npm run build:cjs",
+		"postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
 		"test": "tsx --test test/holidays.test.ts"
 	},
 	"engines": {
