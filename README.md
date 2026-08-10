@@ -14,10 +14,31 @@ npm install festivos-colombia
 > [!IMPORTANT]
 > La versión publicada del proyecto en NPM está desactualizada (1.0.0) debido a que perdí mi cuenta.
 > Cuando recupere la propiedad del paquete, actualizaré las versiones. Mientras tanto, realizar la
-> instalación desde GitHub
+> instalación desde GitHub o ![JSR](https://img.shields.io/badge/jsr-black?style=for-the-badge&logo=JSR)
 
+
+![NPM](https://img.shields.io/badge/npm-red?style=for-the-badge&logo=npm)
 ```bash
 npm install git+https://github.com/juandbc/festivos-colombia
+npx jsr add @juandbc/festivos-colombia
+```
+![pnpm](https://img.shields.io/badge/pnpm-white?style=for-the-badge&logo=pnpm)
+```bash
+pnpm install git+https://github.com/juandbc/festivos-colombia
+pnpx jsr add @juandbc/festivos-colombia
+```
+
+![Bun](https://img.shields.io/badge/bun-black?style=for-the-badge&logo=bun)
+```bash
+bun add github:juandbc/festivos-colombia
+bun add git@github.com:juandbc/festivos-colombia.git
+bun install git+https://github.com/juandbc/festivos-colombia
+bunx jsr add @juandbc/festivos-colombia
+```
+![Yarn](https://img.shields.io/badge/yarn-white?style=for-the-badge&logo=yarn)
+```bash
+yarn add juandbc@git@github.com:juandbc/festivos-colombia.git
+yarn add jsr:@juandbc/festivos-colombia
 ```
 
 # Documentación
