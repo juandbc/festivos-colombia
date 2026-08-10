@@ -1,7 +1,8 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 import {
-	getHolidayByDate,
+  getHolidayByDate,
+	getHolidaysByMonth,
 	getHolidaysByYear,
 	getHolidaysByYearInterval,
 	isHoliday,
@@ -88,4 +89,58 @@ describe("#getHolidayByDate", () => {
 	it("should returns null for a non-holiday", () => {
 		assert.equal(getHolidayByDate("15/03/2024"), null);
 	});
+});
+
+describe("#getHolidaysByMonth", () => {
+  it("should returns the holidays current december", () => {
+    const h = getHolidaysByMonth(12);
+    const y = new Date().getFullYear();
+    assert.equal(h.length, 2);
+    assert.equal(h[0].date, `08/12/${y}`);
+    assert.equal(h[1].date, `25/12/${y}`);
+    assert.equal(h[1].static, true);
+  });
+
+  it("should returns the holidays by month number string", () => {
+    const h = getHolidaysByMonth("12");
+    const y = new Date().getFullYear();
+    assert.equal(h.length, 2);
+    assert.equal(h[0].date, `08/12/${y}`);
+    assert.equal(h[1].date, `25/12/${y}`);
+    assert.equal(h[1].static, true);
+  });
+
+  it("should returns no holidays when given an invalid month number", () => {
+    const h = getHolidaysByMonth("13");
+    assert.equal(h.length, 0);
+  });
+
+  it("should returns the holidays by month name", () => {
+    const h = getHolidaysByMonth("diciembre");
+    const y = new Date().getFullYear();
+    assert.equal(h.length, 2);
+    assert.equal(h[0].date, `08/12/${y}`);
+    assert.equal(h[1].date, `25/12/${y}`);
+    assert.equal(h[1].static, true);
+  });
+
+  it("should returns the holidays by month name with year", () => {
+    const y = 2024;
+    const h = getHolidaysByMonth("diciembre", y);
+    assert.equal(h.length, 2);
+    assert.equal(h[0].date, `08/12/${y}`);
+    assert.equal(h[1].date, `25/12/${y}`);
+    assert.equal(h[1].static, true);
+  });
+
+  it("should returns the holidays by month with year", () => {
+    const y = 2024;
+    const m = 1;
+    const h = getHolidaysByMonth(m, y);
+    assert.equal(h.length, 2);
+    assert.equal(h[0].date, `01/01/${y}`);
+    assert.equal(h[1].date, `08/01/${y}`);
+    assert.equal(h[0].static, true);
+    assert.equal(h[1].static, false);
+  });
 });

@@ -105,9 +105,7 @@ export const getHolidaysByYear = (year: number): Holiday[] => {
 
 	return holidays.map((rule) => {
 		let baseDate =
-			rule.daysToSum != null
-				? sumDay(easterSunday.toDateString(), rule.daysToSum)
-				: new Date(`${rule.date}/${year}`);
+			rule.daysToSum != null ? sumDay(easterSunday.toDateString(), rule.daysToSum) : new Date(`${rule.date}/${year}`);
 
 		if (rule.nextMonday) baseDate = getNextMonday(baseDate);
 
@@ -128,10 +126,7 @@ export const getHolidaysByYear = (year: number): Holiday[] => {
  * @param {number} finalYear año final del rango
  * @returns {YearHolidays[]} Array con todos los festivos del año
  */
-export const getHolidaysByYearInterval = (
-	initialYear: number,
-	finalYear: number,
-): YearHolidays[] => {
+export const getHolidaysByYearInterval = (initialYear: number, finalYear: number): YearHolidays[] => {
 	if (typeof initialYear !== "number" || typeof finalYear !== "number") {
 		throw new TypeError("Los años deben ser números.");
 	}
@@ -153,15 +148,11 @@ export const getHolidaysByYearInterval = (
  * @param {Date | string} date
  * @returns {{date: string, name: string, static: boolean} | null}
  */
-export const getHolidayByDate = (
-	date: Date | string,
-): { date: string; name: string; static: boolean } | null => {
+export const getHolidayByDate = (date: Date | string): { date: string; name: string; static: boolean } | null => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return null;
 	const target = toColombiaDateFormat(d);
-	return (
-		getHolidaysByYear(d.getUTCFullYear()).find((h) => h.date === target) ?? null
-	);
+	return getHolidaysByYear(d.getUTCFullYear()).find((h) => h.date === target) ?? null;
 };
 
 /**
@@ -177,4 +168,66 @@ export const isHoliday = (date: Date | string): boolean => {
 	if (Number.isNaN(d.getTime())) return false;
 	const target = toColombiaDateFormat(d);
 	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
+};
+
+/**
+ * Obtiene el número del mes a partir de su nombre
+ * @param monthName
+ * @param locale {string} código de localización del idioma, por defecto Español
+ * @returns {number} número del mes
+ */
+const getMonthNumber = (monthName: string, locale: string = "es"): number => {
+	const formatter = new Intl.DateTimeFormat(locale, { month: "long" });
+	return (
+		Array.from({ length: 12 }, (_, i) => {
+			const date = new Date(2026, i, 1);
+			return formatter.format(date);
+		}).findIndex((m) => m.toLocaleLowerCase() === monthName.toLocaleLowerCase()) + 1
+	);
+};
+
+/**
+ * @function getHolidaysByMonth
+ * Devuelve los festivos de un mes en especifico.
+ * @author Juan Bermudez
+ * @since 1.4.0
+ * @param month {string | number} número o nombre del mes
+ * @param year {number | undefined} año del mes a calcular. Si no se envía, se asume el año actual
+ * @param locale {string} código de localización del idioma, por defecto Español
+ * @returns {Holiday[]} vector con los festivos del mes
+ */
+export const getHolidaysByMonth = (month: string | number, year?: number | undefined, locale?: string): Holiday[] => {
+	const monthHolidays: Holiday[] = [];
+	if (typeof month === "string") {
+		if (Number.isInteger(Number(month))) {
+			month = Number(month);
+			if (month < 1 || month > 12) return monthHolidays;
+		} else month = getMonthNumber(month, locale);
+	}
+	year = year ? year : new Date().getFullYear();
+	const easterSunday = getEasterSunday(year);
+
+	holidays
+		.filter(
+			(h) =>
+				h.date?.startsWith(pad2(month)) ||
+				(h.daysToSum && sumDay(easterSunday.toDateString(), h.daysToSum).getMonth() === month),
+		)
+		.forEach((h) => {
+			let date: Date;
+			if (h.daysToSum != null) {
+				date = sumDay(easterSunday.toDateString(), h.daysToSum);
+			} else {
+				date = new Date(`${h.date}/${year}`);
+			}
+			if (h.nextMonday) date = getNextMonday(date);
+
+			monthHolidays.push({
+				date: toColombiaDateFormat(date),
+				name: h.name,
+				static: !h.nextMonday,
+			});
+		});
+
+	return monthHolidays;
 };
