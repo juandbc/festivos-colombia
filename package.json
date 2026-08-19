@@ -1,6 +1,6 @@
 {
 	"name": "@juandbc/festivos-colombia",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "Módulo para obtener los días festivos de Colombia.",
 	"type": "module",
 	"main": "dist/cjs/index.js",

@@ -1,6 +1,6 @@
 {
-	"name": "@juandbc/festivos-colombia",
-	"version": "1.4.0",
-	"license": "MIT",
-	"exports": "./src/index.ts"
+  "name": "@juandbc/festivos-colombia",
+  "version": "1.4.1",
+  "license": "MIT",
+  "exports": "./src/index.ts"
 }
