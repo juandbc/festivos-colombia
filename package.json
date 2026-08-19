@@ -29,7 +29,7 @@
 		"build:cjs": "tsc --project tsconfig.cjs.json",
 		"build": "npm run build:esm && npm run build:cjs",
 		"postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
-		"test": "tsx --test test/holidays.test.ts"
+		"test": "npx jest"
 	},
 	"engines": {
 		"node": ">=18"
@@ -58,7 +58,12 @@
 	"homepage": "https://github.com/juandbc/festivos-colombia#readme",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.4",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^26.2.0",
+		"@typescript/native": "npm:typescript@^7.0.2",
+		"jest": "^30.4.2",
+		"ts-jest": "^29.4.12",
 		"tsx": "^4.23.11",
-		"typescript": "^7.0.2"
+		"typescript": "npm:@typescript/typescript6@^6.0.2"
 	}
 }

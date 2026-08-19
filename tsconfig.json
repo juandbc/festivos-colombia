@@ -1,15 +1,16 @@
 {
 	"compilerOptions": {
 		"target": "ES2022",
-		"strict": true,
 		"esModuleInterop": true,
+		"isolatedModules": true,
 		"skipLibCheck": true,
 		"declaration": true,
 		"sourceMap": true,
 		"rootDir": "src",
 		"rewriteRelativeImportExtensions": true,
-		"allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true,
+		"types": ["node", "jest"],
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist", "tests"]
+	"include": ["src/**/*", "test"],
+	"exclude": ["node_modules", "dist"]
 }

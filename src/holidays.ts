@@ -1,12 +1,32 @@
 /**
+ * Representa un día festivo
+ */
+export interface Holiday {
+	/**
+	 * Fecha del festivo in formato DD/MM/YYYY
+	 */
+  date?: string;
+  /**
+   * Días a sumar para los festivos relativos a la Pascua
+   */
+  daysToSum?: number;
+	/** Nombre del festivo */
+	name: string;
+	/** Indica si el festivo es fijo o se mueve al próximo lunes */
+	nextMonday: boolean;
+};
+
+/**
  * Datos de los días festivos de Colombia.
  * Basado en la Ley 51 de 1983.
  *
  * Cada festivo puede definirse de dos formas:
  *  - Con una fecha fija:  { date: "MM-DD", name, nextMonday }
  *  - Relativo a Pascua:   { daysToSum: <número>, name, nextMonday }
+ * @constant {{date: string, nextMonday: boolean, name: string}[] | {daysToSum: number, nextMonday: boolean, name: string}[]}
+ * @default
  */
-export const holidays = [
+export const holidays: Holiday[] = [
 	{ date: "01/01", nextMonday: false, name: "Año Nuevo" },
 	{ date: "01/06", nextMonday: true, name: "Día de los Reyes Magos" },
 	{ date: "03/19", nextMonday: true, name: "Día de San José" },

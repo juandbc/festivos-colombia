@@ -3,17 +3,30 @@
  * @module festivos-colombia
  */
 
-import { holidays } from "./holidays.ts";
+import { type Holiday, holidays } from "./holidays.ts";
 
-export interface Holiday {
-	date: string;
+/**
+ * Representa un día festivo
+ */
+export interface HolidayResp {
+  /**
+	 * Fecha del festivo in formato DD/MM/YYYY
+	 */
+  date: string;
+	/** Indica si el festivo es fijo o se mueve a otra fecha */
+  static: boolean;
+	/** Nombre del festivo */
 	name: string;
-	static: boolean;
 }
 
+/**
+ * Representa los días festivos de un año
+ */
 export interface YearHolidays {
+	/** Año */
 	year: number;
-	holidays: Holiday[];
+	/** Festivos del año */
+	holidays: HolidayResp[];
 }
 
 /**
@@ -96,23 +109,25 @@ const sumDay = (stringDate: string, dayToSum: number): Date => {
  * @param {number} year número del año
  * @returns {Holiday[]} Array con todos los festivos del año
  */
-export const getHolidaysByYear = (year: number): Holiday[] => {
+export const getHolidaysByYear = (year: number): HolidayResp[] => {
 	if (typeof year !== "number" || !Number.isFinite(year)) {
 		throw new TypeError(`El año debe ser un número finito, recibido: ${year}`);
 	}
 	//Obtiene el domingo de pascua para calcular los días litúrgicos
 	const easterSunday = getEasterSunday(year);
 
-	return holidays.map((rule) => {
+	return holidays.map((holiday) => {
 		let baseDate =
-			rule.daysToSum != null ? sumDay(easterSunday.toDateString(), rule.daysToSum) : new Date(`${rule.date}/${year}`);
+			holiday.daysToSum != null
+				? sumDay(easterSunday.toDateString(), holiday.daysToSum)
+				: new Date(`${holiday.date}/${year}`);
 
-		if (rule.nextMonday) baseDate = getNextMonday(baseDate);
+		if (holiday.nextMonday) baseDate = getNextMonday(baseDate);
 
 		return {
 			date: toColombiaDateFormat(baseDate),
-			name: rule.name,
-			static: rule.nextMonday,
+			name: holiday.name,
+			static: isFixed(holiday),
 		};
 	});
 };
@@ -148,7 +163,7 @@ export const getHolidaysByYearInterval = (initialYear: number, finalYear: number
  * @param {Date | string} date
  * @returns {{date: string, name: string, static: boolean} | null}
  */
-export const getHolidayByDate = (date: Date | string): { date: string; name: string; static: boolean } | null => {
+export const getHolidayByDate = (date: Date | string): HolidayResp | null => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
 	if (Number.isNaN(d.getTime())) return null;
 	const target = toColombiaDateFormat(d);
@@ -170,6 +185,7 @@ export const isHoliday = (date: Date | string): boolean => {
 	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
 };
 
+const isFixed = (holiday: Holiday): boolean => !holiday.nextMonday && holiday.daysToSum === undefined;
 /**
  * Obtiene el número del mes a partir de su nombre
  * @param monthName
@@ -196,8 +212,8 @@ const getMonthNumber = (monthName: string, locale: string = "es"): number => {
  * @param locale {string} código de localización del idioma, por defecto Español
  * @returns {Holiday[]} vector con los festivos del mes
  */
-export const getHolidaysByMonth = (month: string | number, year?: number | undefined, locale?: string): Holiday[] => {
-	const monthHolidays: Holiday[] = [];
+export const getHolidaysByMonth = (month: string | number, year?: number | undefined, locale?: string): HolidayResp[] => {
+	const monthHolidays: HolidayResp[] = [];
 	if (typeof month === "string") {
 		if (Number.isInteger(Number(month))) {
 			month = Number(month);
@@ -211,7 +227,8 @@ export const getHolidaysByMonth = (month: string | number, year?: number | undef
 		.filter(
 			(h) =>
 				h.date?.startsWith(pad2(month)) ||
-				(h.daysToSum && sumDay(easterSunday.toDateString(), h.daysToSum).getMonth() === month),
+				// FIXME
+				(h.daysToSum && sumDay(easterSunday.toDateString(), h.daysToSum).getMonth() + 1 === month),
 		)
 		.forEach((h) => {
 			let date: Date;
@@ -225,7 +242,7 @@ export const getHolidaysByMonth = (month: string | number, year?: number | undef
 			monthHolidays.push({
 				date: toColombiaDateFormat(date),
 				name: h.name,
-				static: !h.nextMonday,
+				static: isFixed(h),
 			});
 		});
 

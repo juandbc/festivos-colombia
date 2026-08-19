@@ -176,11 +176,8 @@ import { getHolidaysByYear, isHoliday } from "festivos-colombia";
 let year = 2018;
 
 let holidays = getHolidaysByYear(year);
-holidays.forEach((obj) => {
-  console.log("Año: " + obj.year);
-  obj.holidays.forEach((element) =>
-    console.log(`${element.date} - ${element.name}`),
-  );
+holidays.forEach((element) => {  
+  console.log(`${element.date} - ${element.name}`);
 });
 
 // OUTPUT
