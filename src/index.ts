@@ -34,8 +34,8 @@ export interface YearHolidays {
  * Aplica el formato de dos dígitos a un número menor que diez
  * @author Juan Bermudez
  * @since 1.0
- * @param {number} number número a aplicar el formato
- * @returns {string} texto formateado
+ * @param number - número a aplicar el formato
+ * @returns texto formateado
  */
 const pad2 = (number: number): string => String(number).padStart(2, "0");
 
@@ -44,8 +44,8 @@ const pad2 = (number: number): string => String(number).padStart(2, "0");
  * Aplica el formato DD/MM/YYYY a una fecha
  * @author Juan Bermudez
  * @since 1.0
- * @param {Date} date objeto con la fecha a formatear
- * @returns {string} texto de la fecha formateada
+ * @param date - objeto con la fecha a formatear
+ * @returns texto de la fecha formateada
  */
 const toColombiaDateFormat = (date: Date): string =>
 	`${pad2(date.getDate())}/${pad2(date.getMonth() + 1)}/${date.getFullYear()}`;
@@ -56,8 +56,8 @@ const toColombiaDateFormat = (date: Date): string =>
  * exacta del domingo de resurrección/pascua
  * @author Juan Bermudez
  * @since 1.0
- * @param {number} year número del año
- * @returns {Date} Retorna el domingo de resurrección/pascua
+ * @param year - número del año
+ * @returns Retorna el domingo de resurrección/pascua
  */
 const getEasterSunday = (year: number): Date => {
 	const a = year % 19;
@@ -76,8 +76,8 @@ const getEasterSunday = (year: number): Date => {
  * Calcula el próximo lunes de una fecha dada
  * @author Juan Bermudez
  * @since 1.0
- * @param {Date} date fecha de partida
- * @returns {Date} retorna el próximo lunes a la fecha
+ * @param date - fecha de partida
+ * @returns retorna el próximo lunes a la fecha
  */
 const getNextMonday = (date: Date): Date => {
 	while (date.getDay() !== 1) {
@@ -91,9 +91,9 @@ const getNextMonday = (date: Date): Date => {
  * Suma una cantidad de días a una fecha dada
  * @author Juan Bermudez
  * @since 1.0
- * @param {string} stringDate objeto de la fecha
- * @param {number} dayToSum cantidad de días a sumar
- * @returns {Date} retorna la nueva fecha con los días sumados
+ * @param stringDate - objeto de la fecha
+ * @param dayToSum - cantidad de días a sumar
+ * @returns retorna la nueva fecha con los días sumados
  */
 const sumDay = (stringDate: string, dayToSum: number): Date => {
 	const date = new Date(stringDate);
@@ -106,8 +106,8 @@ const sumDay = (stringDate: string, dayToSum: number): Date => {
  * Calcula y retorna el listado de festivos de un año dado
  * @author Juan Bermudez
  * @since 1.0
- * @param {number} year número del año
- * @returns {Holiday[]} Array con todos los festivos del año
+ * @param year - número del año
+ * @returns Array con todos los festivos del año
  */
 export const getHolidaysByYear = (year: number): HolidayResp[] => {
 	if (typeof year !== "number" || !Number.isFinite(year)) {
@@ -137,9 +137,9 @@ export const getHolidaysByYear = (year: number): HolidayResp[] => {
  * Calcula todos los días festivos de un rango de años
  * @author Juan Bermudez
  * @since 1.0
- * @param {number} initialYear año de inicio del rango
- * @param {number} finalYear año final del rango
- * @returns {YearHolidays[]} Array con todos los festivos del año
+ * @param initialYear - año de inicio del rango
+ * @param finalYear - año final del rango
+ * @returns Array con todos los festivos del año
  */
 export const getHolidaysByYearInterval = (initialYear: number, finalYear: number): YearHolidays[] => {
 	if (typeof initialYear !== "number" || typeof finalYear !== "number") {
@@ -160,8 +160,8 @@ export const getHolidaysByYearInterval = (initialYear: number, finalYear: number
  * Devuelve el festivo que coincide con la fecha, o `null` si no es festivo.
  * @author Juan Bermudez
  * @since 1.2.0
- * @param {Date | string} date
- * @returns {{date: string, name: string, static: boolean} | null}
+ * @param date - fecha a buscar
+ * @returns El objeto del festivo correspondiente
  */
 export const getHolidayByDate = (date: Date | string): HolidayResp | null => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
@@ -175,8 +175,8 @@ export const getHolidayByDate = (date: Date | string): HolidayResp | null => {
  * Calcula si un dia en especifico es festivo
  * @author Santiago Alarcón
  * @since 1.0.1
- * @param {Date | string} date Fecha que se busca saber si es o no festivo.
- * @returns {Boolean} Booleano que indica si es o no es festivo.
+ * @param date - Fecha que se busca saber si es o no festivo.
+ * @returns Booleano que indica si es o no es festivo.
  */
 export const isHoliday = (date: Date | string): boolean => {
 	const d = date instanceof Date ? date : new Date(`${date}T00:00:00`);
@@ -185,12 +185,22 @@ export const isHoliday = (date: Date | string): boolean => {
 	return getHolidaysByYear(d.getUTCFullYear()).some((h) => h.date === target);
 };
 
+/**
+ * Retorna si un festivo es fijo o se mueve
+ * @author Juan Bermudez
+ * @since 1.4.1
+ * @param holiday - objeto a validar
+ * @returns true or false
+ */
 const isFixed = (holiday: Holiday): boolean => !holiday.nextMonday && holiday.daysToSum === undefined;
+
 /**
  * Obtiene el número del mes a partir de su nombre
- * @param monthName
- * @param locale {string} código de localización del idioma, por defecto Español
- * @returns {number} número del mes
+ * @author Juan Bermudez
+ * @since 1.4.1
+ * @param monthName - nombre del mes
+ * @param locale - código de localización del idioma, por defecto Español
+ * @returns número del mes
  */
 const getMonthNumber = (monthName: string, locale: string = "es"): number => {
 	const formatter = new Intl.DateTimeFormat(locale, { month: "long" });
@@ -207,10 +217,10 @@ const getMonthNumber = (monthName: string, locale: string = "es"): number => {
  * Devuelve los festivos de un mes en especifico.
  * @author Juan Bermudez
  * @since 1.4.0
- * @param month {string | number} número o nombre del mes
- * @param year {number | undefined} año del mes a calcular. Si no se envía, se asume el año actual
- * @param locale {string} código de localización del idioma, por defecto Español
- * @returns {Holiday[]} vector con los festivos del mes
+ * @param month - número o nombre del mes
+ * @param year - año del mes a calcular. Si no se envía, se asume el año actual
+ * @param locale - código de localización del idioma, por defecto Español
+ * @returns Vector con los festivos del mes
  */
 export const getHolidaysByMonth = (
 	month: string | number,
@@ -231,7 +241,6 @@ export const getHolidaysByMonth = (
 		.filter(
 			(h) =>
 				h.date?.startsWith(pad2(month)) ||
-				// FIXME
 				(h.daysToSum && sumDay(easterSunday.toDateString(), h.daysToSum).getMonth() + 1 === month),
 		)
 		.forEach((h) => {
