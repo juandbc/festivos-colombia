@@ -9,12 +9,12 @@ import { type Holiday, holidays } from "./holidays.ts";
  * Representa un día festivo
  */
 export interface HolidayResp {
-  /**
+	/**
 	 * Fecha del festivo in formato DD/MM/YYYY
 	 */
-  date: string;
+	date: string;
 	/** Indica si el festivo es fijo o se mueve a otra fecha */
-  static: boolean;
+	static: boolean;
 	/** Nombre del festivo */
 	name: string;
 }
@@ -212,7 +212,11 @@ const getMonthNumber = (monthName: string, locale: string = "es"): number => {
  * @param locale {string} código de localización del idioma, por defecto Español
  * @returns {Holiday[]} vector con los festivos del mes
  */
-export const getHolidaysByMonth = (month: string | number, year?: number | undefined, locale?: string): HolidayResp[] => {
+export const getHolidaysByMonth = (
+	month: string | number,
+	year?: number | undefined,
+	locale?: string,
+): HolidayResp[] => {
 	const monthHolidays: HolidayResp[] = [];
 	if (typeof month === "string") {
 		if (Number.isInteger(Number(month))) {

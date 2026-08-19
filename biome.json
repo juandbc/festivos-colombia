@@ -14,5 +14,8 @@
 	},
 	"assist": {
 		"enabled": true
+	},
+	"files": {
+		"includes": ["src/**", "scripts/**"]
 	}
 }

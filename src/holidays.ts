@@ -5,16 +5,16 @@ export interface Holiday {
 	/**
 	 * Fecha del festivo in formato DD/MM/YYYY
 	 */
-  date?: string;
-  /**
-   * Días a sumar para los festivos relativos a la Pascua
-   */
-  daysToSum?: number;
+	date?: string;
+	/**
+	 * Días a sumar para los festivos relativos a la Pascua
+	 */
+	daysToSum?: number;
 	/** Nombre del festivo */
 	name: string;
 	/** Indica si el festivo es fijo o se mueve al próximo lunes */
 	nextMonday: boolean;
-};
+}
 
 /**
  * Datos de los días festivos de Colombia.

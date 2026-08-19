@@ -9,7 +9,7 @@
 		"rootDir": "src",
 		"rewriteRelativeImportExtensions": true,
 		"allowImportingTsExtensions": true,
-		"types": ["node", "jest"],
+		"types": ["node", "jest"]
 	},
 	"include": ["src/**/*", "test"],
 	"exclude": ["node_modules", "dist"]
