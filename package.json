@@ -33,7 +33,7 @@
 		"test": "npx jest"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=22"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"

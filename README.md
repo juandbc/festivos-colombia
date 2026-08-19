@@ -5,7 +5,7 @@ Módulo de JavaScript para obtener los días festivos de Colombia.
 
 ## Instalación
 
-Requiere **Node.js >= 18**.
+Requiere **Node.js >= 22**.
 
 ```bash
 npm install festivos-colombia
