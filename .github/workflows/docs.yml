@@ -2,7 +2,9 @@ name: Deploy Docs
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
+
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,14 +13,18 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6.0.10
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Build with TypeDoc
+        uses: pnpm/action-setup@v6.0.10
         with:
           version: 11.22.0
       - uses: actions/setup-node@v6
@@ -27,7 +33,8 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run docs
-      - uses: actions/upload-pages-artifact@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./docs
 
@@ -38,5 +45,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v5

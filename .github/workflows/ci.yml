@@ -8,6 +8,7 @@ on:
       - "test/**"
       - "package*.json"
       - "tsconfig.*"
+      - ".github/workflows/**"
   pull_request:
     branches: ["master"]
     paths:
@@ -15,6 +16,7 @@ on:
       - "test/**"
       - "package*.json"
       - "tsconfig.*"
+      - ".github/workflows/**"
 
 jobs:
   build:
