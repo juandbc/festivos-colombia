@@ -123,6 +123,9 @@ dist
 # Docusaurus cache and generated files
 .docusaurus
 
+# TypeDoc
+docs/
+
 # Serverless directories
 .serverless/
 

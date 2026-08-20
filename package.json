@@ -27,10 +27,11 @@
 	"scripts": {
 		"build:esm": "tsc --project tsconfig.esm.json",
 		"build:cjs": "tsc --project tsconfig.cjs.json",
-		"build": "npm run build:esm && npm run build:cjs",
+		"build": "pnpm run build:esm && pnpm run build:cjs",
+		"docs": "typedoc --out docs src/index.ts",
 		"postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
 		"version": "node scripts/update-jsr.cjs",
-		"test": "npx jest"
+		"test": "pnpx jest"
 	},
 	"engines": {
 		"node": ">=22"
@@ -64,7 +65,7 @@
 		"@typescript/native": "npm:typescript@^7.0.2",
 		"jest": "^30.4.2",
 		"ts-jest": "^29.4.12",
-		"tsx": "^4.23.11",
+		"typedoc": "^0.28.20",
 		"typescript": "npm:@typescript/typescript6@^6.0.2"
 	}
 }

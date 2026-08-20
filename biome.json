@@ -16,6 +16,6 @@
 		"enabled": true
 	},
 	"files": {
-		"includes": ["src/**", "scripts/**"]
+		"includes": ["src/**", "scripts/**", "test/**"]
 	}
 }
