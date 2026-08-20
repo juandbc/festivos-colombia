@@ -17,9 +17,12 @@ jobs:
               with:
                   node-version: 22
                   registry-url: https://npm.pkg.github.com/
-            - run: npm ci
-            - run: npm run build
-            - run: npm publish
+            - uses: pnpm/action-setup@v6.0.10
+              with:
+                version: 11.22.0
+            - run: pnpm ci
+            - run: pnpm run build
+            - run: pnpm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -31,4 +34,4 @@ jobs:
         steps:
             - uses: actions/checkout@v7
             - name: Publish package
-              run: npx jsr publish
+              run: pnpx jsr publish
